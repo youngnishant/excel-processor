@@ -4,7 +4,7 @@ import { useDropzone } from "react-dropzone";
 import { getParsedExcelData } from "@/utils/excel";
 import { IFileUploadProps } from "@/types/fileupload";
 
-export default function FileUpload({ onUpload }: IFileUploadProps) {
+const FileUpload = ({ onUpload }: IFileUploadProps) => {
   const onDrop = useCallback(
     (acceptedFiles: File[]) => {
       const reader = new FileReader();
@@ -44,4 +44,6 @@ export default function FileUpload({ onUpload }: IFileUploadProps) {
       )}
     </div>
   );
-}
+};
+
+export default FileUpload;

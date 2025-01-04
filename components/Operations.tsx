@@ -1,6 +1,6 @@
-'use client';
-import React from 'react';
-import { Button, ButtonGroup } from '@mui/material';
+"use client";
+import React from "react";
+import { Button, ButtonGroup } from "@mui/material";
 
 interface OperationsProps {
   onAddTotal: () => void;
@@ -8,7 +8,11 @@ interface OperationsProps {
   onCombineColumns: () => void;
 }
 
-export default function Operations({ onAddTotal, onFilter, onCombineColumns }: OperationsProps) {
+const Operations = ({
+  onAddTotal,
+  onFilter,
+  onCombineColumns,
+}: OperationsProps) => {
   return (
     <ButtonGroup variant="contained" className="space-x-2 mb-4">
       <Button onClick={onAddTotal}>Add Total Column</Button>
@@ -16,4 +20,6 @@ export default function Operations({ onAddTotal, onFilter, onCombineColumns }: O
       <Button onClick={onCombineColumns}>Combine Columns</Button>
     </ButtonGroup>
   );
-}
+};
+
+export default Operations;

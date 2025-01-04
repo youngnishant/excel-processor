@@ -1,14 +1,13 @@
-"use client";
 import { MaterialReactTable } from "material-react-table";
 import { DataTableProps } from "@/types/excel";
 
-export default function DataTable({
+const DataTable = ({
   data,
   columns,
   rowCount,
   pagination,
   onPaginationChange,
-}: DataTableProps) {
+}: DataTableProps) => {
   return (
     <MaterialReactTable
       columns={columns}
@@ -20,4 +19,6 @@ export default function DataTable({
       onPaginationChange={onPaginationChange}
     />
   );
-}
+};
+
+export default DataTable;

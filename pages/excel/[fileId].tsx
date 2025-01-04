@@ -1,13 +1,13 @@
-import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
+import { useRouter } from "next/router";
 import { Container, Box } from "@mui/material";
 import { MRT_ColumnDef } from "material-react-table";
+import axios from "axios";
 import DataTable from "@/components/DataTable";
 import { IExcelRow } from "@/types/excel";
-import axios from "axios";
 import LoadingPopup from "@/components/LoadingPopup";
 
-export default function ExcelViewer() {
+const ExcelViewer = () => {
   const router = useRouter();
   const { fileId } = router.query;
   const [isLoading, setIsLoading] = useState(true);
@@ -67,4 +67,6 @@ export default function ExcelViewer() {
       </Box>
     </Container>
   );
-}
+};
+
+export default ExcelViewer;

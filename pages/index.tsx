@@ -8,7 +8,7 @@ import LoadingPopup from "../components/LoadingPopup";
 import { IExcelRow } from "@/types/excel";
 import axios from "axios";
 
-export default function Home() {
+const Home = () => {
   const router = useRouter();
   const [isUploading, setIsUploading] = useState(false);
 
@@ -44,4 +44,6 @@ export default function Home() {
       </Box>
     </Container>
   );
-}
+};
+
+export default Home;

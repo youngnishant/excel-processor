@@ -1,11 +1,8 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import { connectToDatabase } from "@/lib/mongodb";
 import { v4 as uuidv4 } from "uuid";
+import { connectToDatabase } from "@/db/mongodb";
 
-export default async function handler(
-  req: NextApiRequest,
-  res: NextApiResponse
-) {
+const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method !== "POST") {
     return res.status(405).json({ message: "Method not allowed" });
   }
@@ -29,4 +26,6 @@ export default async function handler(
     console.error(error);
     return res.status(500).json({ message: "Error processing file" });
   }
-}
+};
+
+export default handler;
