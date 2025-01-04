@@ -1,36 +1,92 @@
 import { useState } from "react";
+import { useRouter } from "next/router";
 import { Box, Button, Autocomplete, TextField } from "@mui/material";
-import AddIcon from "@mui/icons-material/Add";
-import FilterListIcon from "@mui/icons-material/FilterList";
-import MergeIcon from "@mui/icons-material/Merge";
 
 const TableOperationsToolbar = () => {
-  const [selectedOperation, setSelectedOperation] = useState<string | null>(
+  const router = useRouter();
+  const [selectedOperation, setSelectedOperation] = useState<number | null>(
     null
   );
 
   const predefinedOperationsOptions = [
     {
       label: "Add Column: Total",
-      operationName: "addColumn",
+      value: {
+        id: 1,
+        operationName: "columnSum",
+        operationType: "sum",
+        columns: ["Price", "Tax"],
+      },
     },
     {
-      label: "Filter: Price > 100",
-      operationName: "filterRows",
+      label: "Filter: Price > 127000",
+      value: {
+        id: 2,
+        operationName: "filterRows",
+        filterKey: "Price",
+        filterValue: 127000,
+        filterOperation: "gt",
+      },
     },
     {
-      label: "Filter rows where Income > 5000",
-      operationName: "filterRows",
+      label: "Filter rows where Tax > 32",
+      value: {
+        id: 3,
+        operationName: "filterRows",
+        filterKey: "Tax",
+        filterValue: 32,
+        filterOperation: "gt",
+      },
     },
     {
-      label: "Combine First and last name Columns",
-      operationName: "combineFirstnameAndLastnameColumns",
+      label: "Combine First and last name Columns into Full Name",
+      value: {
+        id: 4,
+        operationName: "combineColumns",
+        column1: "First Name",
+        column2: "Last Name",
+        newColumn: "Full Name",
+      },
     },
   ];
 
-  const handleProcess = () => {
+  const handleProcess = async () => {
     if (selectedOperation) {
-      console.log("Processing operation:", selectedOperation);
+      const operation = predefinedOperationsOptions.find(
+        (op) => op.value.id === selectedOperation
+      );
+
+      switch (operation?.value.operationName) {
+        case "filterRows":
+          router.push({
+            pathname: router.pathname,
+            query: {
+              ...router.query,
+              filterKey: operation.value.filterKey,
+              filterValue: operation.value.filterValue,
+              filterOperation: operation.value.filterOperation,
+            },
+          });
+          break;
+
+        case "columnSum":
+          await fetch("/api/operations/column", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(operation.value),
+          });
+          break;
+
+        case "combineColumns":
+          await fetch("/api/operations/combine", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(operation.value),
+          });
+          break;
+      }
+
+      console.log("Processing operation:", operation);
     }
   };
 
@@ -54,7 +110,11 @@ const TableOperationsToolbar = () => {
         <Autocomplete
           options={predefinedOperationsOptions}
           getOptionLabel={(option) => option.label}
-          renderOption={(props, option) => <li {...props}>{option.label}</li>}
+          renderOption={(props, option) => (
+            <li {...props} key={option.value.id}>
+              {option.label}
+            </li>
+          )}
           renderInput={(params) => (
             <TextField
               {...params}
@@ -64,7 +124,7 @@ const TableOperationsToolbar = () => {
             />
           )}
           onChange={(_, newValue) =>
-            setSelectedOperation(newValue?.operationName || null)
+            setSelectedOperation(newValue?.value.id || null)
           }
         />
         <Button

@@ -9,7 +9,7 @@ import LoadingPopup from "@/components/LoadingPopup";
 
 const ExcelViewer = () => {
   const router = useRouter();
-  const { fileId } = router.query;
+  const { fileId, filterKey, filterValue, filterOperation } = router.query;
   const [isLoading, setIsLoading] = useState(true);
   const [data, setData] = useState<IExcelRow[]>([]);
   const [columns, setColumns] = useState<MRT_ColumnDef<IExcelRow>[]>([]);
@@ -23,18 +23,25 @@ const ExcelViewer = () => {
     if (!fileId) return;
     setIsLoading(true);
     try {
-      const response = await axios.get("/api/getData", {
-        params: {
-          page: pagination.pageIndex + 1,
-          limit: pagination.pageSize,
-          userId: "guest",
-          fileId,
-        },
-      });
+      const response = await axios.post(
+        "/api/data",
+        {},
+        {
+          params: {
+            page: pagination.pageIndex,
+            limit: pagination.pageSize,
+            userId: "guest",
+            fileId,
+            filterKey,
+            filterValue,
+            filterOperation,
+          },
+        }
+      );
 
       setData(response.data.data);
       setColumns(response.data.columns);
-      setTotalRows(response.data.pagination.totalRecords);
+      setTotalRows(response.data.pagination.totalRecordsCount);
     } catch (error) {
       console.error("Error fetching data:", error);
     } finally {
@@ -46,7 +53,7 @@ const ExcelViewer = () => {
     if (fileId) {
       fetchPaginatedData();
     }
-  }, [pagination, fileId]);
+  }, [pagination, fileId, filterKey, filterValue, filterOperation]);
 
   return (
     <Container maxWidth="lg">

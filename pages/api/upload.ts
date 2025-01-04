@@ -30,13 +30,25 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     const { db } = await connectToDatabase();
 
     const fileId = uuidv4();
-    await db.collection("excel-data").insertOne({
+    await db.collection("excel_sheet_data").insertOne({
       userId: "guest",
       fileId,
       columns,
-      data,
       createdAt: new Date(),
     });
+
+    await db.collection("excel_sheet_rows").bulkWrite(
+      data.map((row, index) => ({
+        insertOne: {
+          document: {
+            rowNumber: index + 1,
+            fileId,
+            userId: "guest",
+            data: row,
+          },
+        },
+      }))
+    );
 
     return res.status(200).json({ fileId });
   } catch (error) {

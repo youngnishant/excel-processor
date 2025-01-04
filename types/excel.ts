@@ -22,3 +22,5 @@ export interface IPagination {
   pageIndex: number;
   pageSize: number;
 }
+
+export type Operation = "equals" | "gt" | "lt" | "gte" | "lte" | "contains";
