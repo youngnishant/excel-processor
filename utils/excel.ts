@@ -1,12 +1,9 @@
 import { IExcelRow } from "@/types/excel";
 import * as XLSX from "xlsx";
 
-const getData = (
-  excelBinaryData: string | ArrayBuffer | null | undefined
-): IExcelRow[] => {
-  const workbook = XLSX.read(excelBinaryData, { type: "array" });
-  const sheetName = workbook.SheetNames[0];
-  const worksheet = workbook.Sheets[sheetName];
+const getData = (filepath: string): IExcelRow[] => {
+  const workbook = XLSX.readFile(filepath);
+  const worksheet = workbook.Sheets[workbook.SheetNames[0]];
   return XLSX.utils.sheet_to_json(worksheet);
 };
 
@@ -17,10 +14,8 @@ const getColumns = (excelRow: IExcelRow) => {
   }));
 };
 
-const getParsedExcelData = (
-  excelBinaryData: string | ArrayBuffer | null | undefined
-) => {
-  const data: IExcelRow[] = getData(excelBinaryData);
+const getParsedExcelData = (filepath: string) => {
+  const data: IExcelRow[] = getData(filepath);
   const columns = getColumns(data[0]);
 
   return { data, columns };

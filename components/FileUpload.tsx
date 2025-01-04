@@ -1,28 +1,9 @@
-"use client";
-import { useCallback } from "react";
 import { useDropzone } from "react-dropzone";
-import { getParsedExcelData } from "@/utils/excel";
 import { IFileUploadProps } from "@/types/fileupload";
 
 const FileUpload = ({ onUpload }: IFileUploadProps) => {
-  const onDrop = useCallback(
-    (acceptedFiles: File[]) => {
-      const reader = new FileReader();
-
-      reader.onload = (event) => {
-        const excelBinaryData = event.target?.result;
-        const { data, columns } = getParsedExcelData(excelBinaryData);
-
-        onUpload({ columns, data });
-      };
-
-      reader.readAsArrayBuffer(acceptedFiles[0]);
-    },
-    [onUpload]
-  );
-
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
-    onDrop,
+    onDrop: onUpload,
     accept: {
       "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet": [
         ".xlsx",

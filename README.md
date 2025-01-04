@@ -1,43 +1,47 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/pages/api-reference/create-next-app).
+# Excel Processor React App
 
-## Getting Started
+A React-based web application that allows users to upload an Excel file, perform predefined operations on the file, and dynamically display the updated data in a table format.
 
-First, run the development server:
+## Features
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+1. **File Upload Interface**: Allows users to upload Excel files.
+2. **Dynamic Table Display**: Displays uploaded Excel data in a table format that updates dynamically.
+3. **Operation Prompts**: Users can perform operations like:
+   - Add a new column (e.g., `Total = Price + Tax`).
+   - Filter rows (e.g., `Income > 5000`).
+   - Combine columns (e.g., `First Name + Last Name = Full Name`).
+4. **Reusable Components**: Modular design for file upload, table display, and operation prompts.
+5. **Simulated Backend**: Mock API to process file uploads and operations.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Technologies Used
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+- **Frontend**: React, React Hooks, Material-UI / React Table
+- **Backend**: JSON Server or Node.js with Express (mock API)
+- **File Parsing**: `xlsx` library
+- **HTTP Requests**: Axios or Fetch API
 
-[API routes](https://nextjs.org/docs/pages/building-your-application/routing/api-routes) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+## Setup and Installation
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/pages/building-your-application/routing/api-routes) instead of React pages.
+1. Clone the repository:
 
-This project uses [`next/font`](https://nextjs.org/docs/pages/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+   ```bash
+   git clone <repository-url>
+   cd excel-processor
+   ```
 
-## Learn More
+2. Install dependencies:
 
-To learn more about Next.js, take a look at the following resources:
+   ```bash
+   nvm use
+   npm install
+   ```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn-pages-router) - an interactive Next.js tutorial.
+3. Start the mock backend:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+   ```bash
+   npm run dev
+   ```
 
-## Deploy on Vercel
+4. Access the application at `http://localhost:3000`.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/pages/building-your-application/deploying) for more details.
-
-
-http://localhost:3000/excel/c484725d-3810-401c-a522-1936faba58fd
+5. Reference for Material React Table: `https://www.material-react-table.com/docs/api/table-options`

@@ -1,5 +1,6 @@
 import { MaterialReactTable } from "material-react-table";
-import { DataTableProps } from "@/types/excel";
+import { IDataTableProps } from "@/types/excel";
+import TableOperationsToolbar from "./TableOperationToolbar";
 
 const DataTable = ({
   data,
@@ -7,7 +8,7 @@ const DataTable = ({
   rowCount,
   pagination,
   onPaginationChange,
-}: DataTableProps) => {
+}: IDataTableProps) => {
   return (
     <MaterialReactTable
       columns={columns}
@@ -17,6 +18,12 @@ const DataTable = ({
       rowCount={rowCount}
       state={{ pagination }}
       onPaginationChange={onPaginationChange}
+      enableFilters={false}
+      enableDensityToggle={false}
+      enableHiding={false}
+      renderTopToolbar={TableOperationsToolbar}
+      enableColumnActions={false}
+      enableSorting={false}
     />
   );
 };

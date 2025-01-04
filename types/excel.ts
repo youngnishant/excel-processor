@@ -5,7 +5,7 @@ export interface IExcelRow {
   [key: string]: string | number | null;
 }
 
-export interface DataTableProps {
+export interface IDataTableProps {
   data: IExcelRow[];
   columns: MRT_ColumnDef<IExcelRow>[];
   rowCount: number;
@@ -13,7 +13,9 @@ export interface DataTableProps {
     pageIndex: number;
     pageSize: number;
   };
-  onPaginationChange: Dispatch<SetStateAction<{ pageIndex: number; pageSize: number; }>>;
+  onPaginationChange: Dispatch<
+    SetStateAction<{ pageIndex: number; pageSize: number }>
+  >;
 }
 
 export interface IPagination {

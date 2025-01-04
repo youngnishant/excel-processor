@@ -1,36 +1,30 @@
-"use client";
 import { useState } from "react";
 import { useRouter } from "next/router";
 import { Container, Box } from "@mui/material";
-import { MRT_ColumnDef } from "material-react-table";
 import FileUpload from "../components/FileUpload";
 import LoadingPopup from "../components/LoadingPopup";
-import { IExcelRow } from "@/types/excel";
 import axios from "axios";
 
 const Home = () => {
   const router = useRouter();
   const [isUploading, setIsUploading] = useState(false);
 
-  const handleFileUpload = async ({
-    data: uploadedData,
-    columns: cols,
-  }: {
-    data: IExcelRow[];
-    columns: MRT_ColumnDef<IExcelRow>[];
-  }) => {
+  const handleFileUpload = async (acceptedFiles: File[]) => {
     setIsUploading(true);
     try {
-      const response = await axios.post("/api/upload", {
-        userId: "guest",
-        data: uploadedData,
-        columns: cols,
+      const formData = new FormData();
+      formData.append("file", acceptedFiles[0]);
+      formData.append("userId", "guest");
+
+      const response = await axios.post("/api/upload", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
       });
 
       router.push(`/excel/${response.data.fileId}`);
     } catch (error) {
       console.error("Error uploading file:", error);
-    } finally {
       setIsUploading(false);
     }
   };

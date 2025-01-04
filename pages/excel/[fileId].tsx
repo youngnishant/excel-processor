@@ -51,19 +51,16 @@ const ExcelViewer = () => {
   return (
     <Container maxWidth="lg">
       <Box sx={{ py: 4 }}>
-        <h1 className="text-2xl font-bold mb-4">Excel Viewer</h1>
-        <Box sx={{ mt: 4 }}>
-          {data.length > 0 && (
-            <DataTable
-              data={data}
-              columns={columns}
-              rowCount={totalRows}
-              pagination={pagination}
-              onPaginationChange={setPagination}
-            />
-          )}
-          {isLoading && <LoadingPopup loadingText="Loading Excel File..." />}
-        </Box>
+        {data.length > 0 && (
+          <DataTable
+            data={data}
+            columns={columns}
+            rowCount={totalRows}
+            pagination={pagination}
+            onPaginationChange={setPagination}
+          />
+        )}
+        {isLoading && <LoadingPopup loadingText="Loading Excel File..." />}
       </Box>
     </Container>
   );
