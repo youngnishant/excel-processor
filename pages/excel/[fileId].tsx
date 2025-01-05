@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
+import { cloneDeep } from "lodash";
 import { Container, Box } from "@mui/material";
 import axios from "axios";
 import DataTable from "@/components/DataTable";
@@ -81,7 +82,7 @@ const ExcelViewer = () => {
         {!isLoading && data.length > 0 && (
           <DataTable
             data={data}
-            columns={columns}
+            columns={cloneDeep(columns)}
             rowCount={totalCount}
             pagination={pagination}
             onPaginationChange={setPagination}
