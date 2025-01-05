@@ -41,10 +41,9 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       data.map((row, index) => ({
         insertOne: {
           document: {
-            rowNumber: index + 1,
             fileId,
             userId: "guest",
-            data: row,
+            data: { rowNumber: index + 1, ...row },
           },
         },
       }))

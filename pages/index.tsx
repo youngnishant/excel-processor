@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { useRouter } from "next/router";
+import axios from "axios";
 import { Container, Box } from "@mui/material";
 import FileUpload from "../components/FileUpload";
 import LoadingPopup from "../components/LoadingPopup";
-import axios from "axios";
 
 const Home = () => {
   const router = useRouter();

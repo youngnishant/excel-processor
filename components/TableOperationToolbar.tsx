@@ -85,8 +85,6 @@ const TableOperationsToolbar = () => {
           });
           break;
       }
-
-      console.log("Processing operation:", operation);
     }
   };
 

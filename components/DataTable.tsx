@@ -9,9 +9,11 @@ const DataTable = ({
   pagination,
   onPaginationChange,
 }: IDataTableProps) => {
+  const mutableColumns = columns.map((column) => ({ ...column }));
+
   return (
     <MaterialReactTable
-      columns={columns}
+      columns={mutableColumns}
       data={data}
       enablePagination={true}
       manualPagination
