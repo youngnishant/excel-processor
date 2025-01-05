@@ -2,6 +2,7 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import { connectToDatabase } from "@/db/mongodb";
 import { IExcelRow, Operation } from "@/types/excel";
 import { buildMongoFilter } from "@/utils/queryBuilder";
+import { getColumns } from "@/utils/excel";
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method !== "POST") {
@@ -40,13 +41,15 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       .limit(limit)
       .toArray();
 
+    const columns = getColumns(rowsData[0].data);
+
     const totalRecordsCount = await db
       .collection("excel_sheet_rows")
       .countDocuments(rowsfilter);
 
     return res.status(200).json({
       data: rowsData.map((row: IExcelRow) => row.data),
-      columns: fileData.columns,
+      columns,
       pagination: {
         currentPage: page,
         totalRecordsCount,

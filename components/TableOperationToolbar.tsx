@@ -1,9 +1,13 @@
 import { useState } from "react";
 import { useRouter } from "next/router";
 import { Box, Button, Autocomplete, TextField } from "@mui/material";
+import axios from "axios";
+import { OperationType } from "@/types/operations";
 
 const TableOperationsToolbar = () => {
   const router = useRouter();
+  const { fileId } = router.query;
+  console.log("------------_>", fileId);
   const [selectedOperation, setSelectedOperation] = useState<number | null>(
     null
   );
@@ -14,8 +18,9 @@ const TableOperationsToolbar = () => {
       value: {
         id: 1,
         operationName: "columnSum",
-        operationType: "sum",
-        columns: ["Price", "Tax"],
+        column1: "Price",
+        column2: "Tax",
+        newColumnName: "Total",
       },
     },
     {
@@ -45,7 +50,7 @@ const TableOperationsToolbar = () => {
         operationName: "combineColumns",
         column1: "First Name",
         column2: "Last Name",
-        newColumn: "Full Name",
+        newColumnName: "Full Name",
       },
     },
   ];
@@ -70,18 +75,18 @@ const TableOperationsToolbar = () => {
           break;
 
         case "columnSum":
-          await fetch("/api/operations/column", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(operation.value),
+          await axios.post(`/api/operations/${fileId}`, {
+            userId: "guest",
+            operationType: OperationType.ADD_COLUMN,
+            params: operation.value,
           });
           break;
 
         case "combineColumns":
-          await fetch("/api/operations/combine", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(operation.value),
+          await axios.post(`/api/operations/${fileId}`, {
+            userId: "guest",
+            operationType: OperationType.COMBINE_COLUMNS,
+            params: operation.value,
           });
           break;
       }

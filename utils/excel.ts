@@ -8,17 +8,12 @@ const getData = (filepath: string): IExcelRow[] => {
 };
 
 const getColumns = (excelRow: IExcelRow) => {
+  delete excelRow.rowNumber;
+
   return Object.keys(excelRow).map((key) => ({
     accessorKey: key,
     header: key,
   }));
 };
 
-const getParsedExcelData = (filepath: string) => {
-  const data: IExcelRow[] = getData(filepath);
-  const columns = getColumns(data[0]);
-
-  return { data, columns };
-};
-
-export { getParsedExcelData };
+export { getData, getColumns };
