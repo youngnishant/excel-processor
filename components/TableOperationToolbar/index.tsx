@@ -55,12 +55,18 @@ const TableOperationsToolbar = () => {
           break;
 
         case "combineColumns":
-          await axios.post(`/api/operations/${fileId}`, {
-            userId: "guest",
-            operationType: OperationType.COMBINE_COLUMNS,
-            params: operation.value,
-          });
-          router.push(`/excel/${fileId}`);
+          try {
+            await axios.post(`/api/operations/${fileId}`, {
+              userId: "guest",
+              operationType: OperationType.COMBINE_COLUMNS,
+              params: operation.value,
+            });
+            router.push(`/excel/${fileId}`);
+          } catch (error) {
+            console.log(error);
+            alert("Columns not found");
+            router.push(`/excel/${fileId}`);
+          }
           break;
       }
       setLoading(false);

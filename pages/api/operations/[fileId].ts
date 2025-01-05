@@ -49,6 +49,16 @@ const handleCombineColumns = async ({
   newColumnName,
   db,
 }: OperationParams) => {
+  const sampleDocument = await db
+    .collection("excel_sheet_rows")
+    .findOne({ userId, fileId });
+
+  if (!sampleDocument?.data?.[column1] || !sampleDocument?.data?.[column2]) {
+    throw new Error(
+      `One or both columns (${column1}, ${column2}) do not exist in the dataset`
+    );
+  }
+
   await db.collection("excel_sheet_rows").updateMany({ userId, fileId }, [
     {
       $set: {
