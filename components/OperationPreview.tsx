@@ -17,7 +17,17 @@ const OperationPreview = ({
   selectedOperation,
   predefinedOperationsOptions,
   examplePreviews,
-}: any) => {
+}: {
+  openDialog: boolean;
+  setOpenDialog: (open: boolean) => void;
+  handleConfirm: () => void;
+  selectedOperation: number | null;
+  predefinedOperationsOptions: Array<{
+    value: { id: number; operationName: string };
+    label: string;
+  }>;
+  examplePreviews: Record<string, { before: IExcelRow[]; after: IExcelRow[] }>;
+}) => {
   const getTableData = (time: "before" | "after"): IExcelRow[] => {
     const opName = predefinedOperationsOptions.find(
       (op) => op.value.id === selectedOperation
